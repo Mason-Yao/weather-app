@@ -44,11 +44,6 @@ export const authSlice = createSlice(
             error: null,
         },
         reducers: {
-            logout: (state) => {
-                state.user = null;
-                state.token = null;
-                window.localStorage.setItem('token', null);
-            },
         },
         extraReducers: (builder) => {
             builder
@@ -92,7 +87,6 @@ export const authSlice = createSlice(
     },
 )
 
-export const {toLogout} = authSlice.actions
 
 export const selectUser = (state) => {
     return state.auth.user;

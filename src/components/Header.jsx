@@ -7,7 +7,6 @@ import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
 import {setTheme, selectTheme} from "../slices/styleSlice";
 import { selectUser } from "../slices/authSlice";
-import { toLogout } from "../slices/authSlice";
 
 import logo from "../images/logo.png"
 
@@ -26,7 +25,8 @@ function Header () {
     };
 
     const handleLogout = () => {
-        dispatch(toLogout());
+        window.localStorage.setItem('token', null);
+        window.location.href = "/login";
     };
 
     const mode = useSelector(selectTheme);
