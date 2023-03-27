@@ -1,0 +1,106 @@
+.user-info{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100vh;
+    background: #fff;
+    box-shadow: 0 0 8px rgba(0,0,0,.3);
+    z-index: 1200;
+    overflow-x: hidden;
+    transition: width 0.5s ease-in-out;
+}
+
+.user-info-show {
+    width: 450px;
+}
+
+.user-info-content {
+    background: linear-gradient(
+            to right,
+            rgba(121, 254, 203, 1),
+            rgba(128, 145, 254, 1)
+    );
+    width: 450px;
+    height: 300px;
+    padding-top: 5rem;
+    box-shadow: 0 0 10px rgba(0,0,0,1);
+}
+
+.user-info-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out, z-index 0.8s;
+}
+
+.user-info-overlay-show {
+    z-index: 9999;
+    width: calc(100% - 450px);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.logo-image {
+    width: 60%;
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+}
+.logo-image-nav {
+    margin-left: 2rem;
+    width: 25%;
+    z-index: 2000;
+}
+
+.weather-card {
+    width: 22rem;
+    height: 38rem;
+    border-radius: 3rem;
+}
+.weather-image {
+    width: 18rem;
+    height: 25rem;
+
+}
+
+.weather-icon {
+    margin-top: 2rem;
+    padding: 5% 30%;
+}
+
+.forecast-card {
+    width: 68rem;
+    height: 40rem;
+    border-radius: 2rem;
+}
+
+.title-city-name {
+    margin-top: 1rem;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+.current-card-dark {
+    background: linear-gradient(
+            to bottom,
+            rgba( 0, 4, 98, 1),
+            rgba(90, 22, 108, 1)
+    );
+    color: white;
+}
+
+
+.user-bg-dark {
+    height: 100vh;
+    background: linear-gradient(
+        to bottom,
+        rgba(178, 144, 255, 1),
+        rgba(46, 29, 101, 1)
+    );
+}
+
+.border-shadow {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
