@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectWeatherByCIty, getWeatherForecast, selectLoginStatus} from "../slices/weatherSlice";
 import {selectTheme} from "../slices/styleSlice";
@@ -6,11 +6,11 @@ import {selectTheme} from "../slices/styleSlice";
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import cloudy from "../images/cloudy.png"
-import sunny from "../images/sunny.png"
-import rainy from "../images/rainy.png"
-import snowy from "../images/snowy.png"
-import stormy from "../images/stormy.png"
+import cloudy from "../images/cloudy.png";
+import sunny from "../images/sunny.png";
+import rainy from "../images/rainy.png";
+import snowy from "../images/snowy.png";
+import stormy from "../images/stormy.png";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {selectUser} from "../slices/authSlice";
@@ -20,31 +20,31 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {Fab} from "@mui/material";
 function weatherIconSelect(weatherCondition) {
     if (weatherCondition.toLowerCase().includes("cloud")) {
-        return cloudy
+        return cloudy;
     }
     if (weatherCondition.toLowerCase().includes("sun") || weatherCondition.toLowerCase().includes("clear")) {
-        return sunny
+        return sunny;
     }
     if (weatherCondition.toLowerCase().includes("rain")) {
-        return rainy
+        return rainy;
     }
     if (weatherCondition.toLowerCase().includes("snow")) {
-        return snowy
+        return snowy;
     }
     if (weatherCondition.toLowerCase().includes("storm")) {
-        return stormy
+        return stormy;
     }
-    return null
+    return null;
 }
 
 function CurrentWeatherCard(props) {
-    const weatherData = useSelector(selectWeatherByCIty)(props.city)
-    const loginStatus = useSelector(selectLoginStatus)
-    const weatherRequestStatus = weatherData && weatherData.requestStatus
-    const dispatch = useDispatch()
+    const weatherData = useSelector(selectWeatherByCIty)(props.city);
+    const loginStatus = useSelector(selectLoginStatus);
+    const weatherRequestStatus = weatherData && weatherData.requestStatus;
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getWeatherForecast(props.city))
+        dispatch(getWeatherForecast(props.city));
 
     }, [dispatch, props.city])
     useEffect(() => {
@@ -63,39 +63,39 @@ function CurrentWeatherCard(props) {
     }
     // Check the data request thunk status and update the weather data.
     if (weatherData && weatherData.requestStatus === "succeeded") {
-        console.log("mark1")
-        console.log(weatherData)
-        currentWeatherData.cityName = weatherData.location.name
-        currentWeatherData.tempNow = weatherData.current.temp_c
-        currentWeatherData.condition = weatherData.current.condition.text
-        currentWeatherData.tempMax = weatherData.forecast.forecastday[0].day.maxtemp_c
-        currentWeatherData.tempMin = weatherData.forecast.forecastday[0].day.mintemp_c
-        currentWeatherData.weatherIcon = weatherIconSelect(weatherData.current.condition.text)
+        console.log("mark1");
+        console.log(weatherData);
+        currentWeatherData.cityName = weatherData.location.name;
+        currentWeatherData.tempNow = weatherData.current.temp_c;
+        currentWeatherData.condition = weatherData.current.condition.text;
+        currentWeatherData.tempMax = weatherData.forecast.forecastday[0].day.maxtemp_c;
+        currentWeatherData.tempMin = weatherData.forecast.forecastday[0].day.mintemp_c;
+        currentWeatherData.weatherIcon = weatherIconSelect(weatherData.current.condition.text);
     }
 
-    const theme = useSelector(selectTheme)
+    const theme = useSelector(selectTheme);
     // Prepare user and cities data, send back to server if user add a new city.
-    const user = useSelector(selectUser)
-    const cities = user && user.cities
-    const forecastLink = "/forecast/" + currentWeatherData.cityName
+    const user = useSelector(selectUser);
+    const cities = user && user.cities;
+    const forecastLink = "/forecast/" + currentWeatherData.cityName;
     const handleAddCity = async () => {
         if (cities && !cities.includes(currentWeatherData.cityName)) {
             try {
-                await updateSavedCitiesAPI({username: user.username, cities: [...cities, currentWeatherData.cityName]})
-                window.location.href = "/user"
+                await updateSavedCitiesAPI({username: user.username, cities: [...cities, currentWeatherData.cityName]});
+                window.location.href = "/user";
             } catch (err) {
-                console.log(err)
+                console.log(err);
             }
         }
     }
     const handleRemoveCity = async () => {  
         if (cities && cities.includes(currentWeatherData.cityName)) {
-            const newCities = cities.filter(city => city !== currentWeatherData.cityName)
+            const newCities = cities.filter(city => city !== currentWeatherData.cityName);
             try {
-                await updateSavedCitiesAPI({username: user.username, cities: newCities})
-                window.location.href = "/user"
+                await updateSavedCitiesAPI({username: user.username, cities: newCities});
+                window.location.href = "/user";
             } catch (err) {
-                console.log(err)
+                console.log(err);
             }
         }
     }
@@ -146,8 +146,7 @@ function CurrentWeatherCard(props) {
                 }
             </Card.Body>
         </Card>
-
-    )
+    );
 }
 
 function AddCityCard() {
@@ -167,7 +166,7 @@ function AddCityCard() {
 
             </Card.Body>
         </Card>
-    )
+    );
 }
 
 function WeatherForecastCard(props) {
@@ -266,7 +265,7 @@ function DayWeather(props) {
             <h4>{data.avgTemp}</h4>
             <p>{data.weatherCondition.toUpperCase()}</p>
         </Container>
-    )
+    );
 }
 
 export {CurrentWeatherCard, AddCityCard, WeatherForecastCard, DayWeather}

@@ -9,7 +9,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function CarouselCurrentWeather (props) {
-    const cities = [...props.cities, "newCity"]
+    const cities = [...props.cities, "newCity"];
     const [currentIndex, setCurrentIndex] = useState(0);
     const handleNext = () => {
         setCurrentIndex((currentIndex + 1) % props.cities.length);
@@ -19,7 +19,7 @@ function CarouselCurrentWeather (props) {
         setCurrentIndex((currentIndex - 1 + props.cities.length) % props.cities.length);
     };
 
-    const [numberOfCities, setNumberOfCities] = useState(3)
+    const [numberOfCities, setNumberOfCities] = useState(3);
     useEffect(() => {
         function handleResize() {
             if (window.innerWidth < 1400) {
@@ -64,4 +64,4 @@ function CarouselCurrentWeather (props) {
 
 }
 
-export default CarouselCurrentWeather
+export default CarouselCurrentWeather;

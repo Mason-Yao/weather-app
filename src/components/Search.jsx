@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
 import {CurrentWeatherCard} from "./weatherCards";
 import {Form, InputGroup, Button} from "react-bootstrap";
 import {useSelector} from "react-redux";
@@ -7,16 +7,16 @@ import Header from './Header';
 import { selectTheme } from "../slices/styleSlice";
 
 export default function Search() {
-    const theme = useSelector(selectTheme)
-    const [city, setCity] = useState(null)
-    const weatherData = useSelector(selectWeatherByCIty)(city)
-    const weatherRequestStatus = weatherData && weatherData.requestStatus
-    const weatherRequestError = weatherRequestStatus === "failed" && weatherData.error
+    const theme = useSelector(selectTheme);
+    const [city, setCity] = useState(null);
+    const weatherData = useSelector(selectWeatherByCIty)(city);
+    const weatherRequestStatus = weatherData && weatherData.requestStatus;
+    const weatherRequestError = weatherRequestStatus === "failed" && weatherData.error;
 
     // set city value to a input value when user click search button then render the card
     const handleSearch = (e) => {
         e.preventDefault();
-        setCity(e.target.search.value)
+        setCity(e.target.search.value);
     }
     const cardStyleShown = "container-fluid d-flex justify-content-center w-50"
     const cardStyleHidden = "container-fluid d-flex justify-content-center w-50 d-none"
@@ -46,5 +46,5 @@ export default function Search() {
                 </div>
             }
         </div>
-    )
+    );
 }

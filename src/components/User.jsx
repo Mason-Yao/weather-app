@@ -8,9 +8,9 @@ import Header from "./Header";
 
 
 function User() {
-    const theme = useSelector(selectTheme)
-    const user = useSelector(selectUser)
-    const cities = (user && user.cities) || []
+    const theme = useSelector(selectTheme);
+    const user = useSelector(selectUser);
+    const cities = (user && user.cities) || [];
 
     return (
         <div className={`${theme === "dark" ? "user-bg-dark" : ""}`}>
@@ -18,7 +18,7 @@ function User() {
             <div style={{height: "5rem"}}>&nbsp;</div>
             <CarouselCurrentWeather cities={cities}/>
         </div>
-    )
+    );
 }
 
 export default User;

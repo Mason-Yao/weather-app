@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {login, selectAuthingStatus} from "../slices/authSlice";
 
@@ -14,7 +14,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import logo from "../images/logo.png"
+import logo from "../images/logo.png";
 
 import Header from "./Header";
 
@@ -34,12 +34,12 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login() {
-    const dispatch = useDispatch()
-    const error = useSelector(state => state.auth.error)
-    const status = useSelector(selectAuthingStatus)
+    const dispatch = useDispatch();
+    const error = useSelector(state => state.auth.error);
+    const status = useSelector(selectAuthingStatus);
 
     if(status && status === "succeeded") {
-        window.location.href = "/user"
+        window.location.href = "/user";
     }
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -48,7 +48,7 @@ export default function Login() {
         for (const [key, value] of formData.entries()) {
             data[key] = value;
         }
-        dispatch(login(data))
+        dispatch(login(data));
     };
 
 

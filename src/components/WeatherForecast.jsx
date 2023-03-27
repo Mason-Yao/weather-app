@@ -4,8 +4,8 @@ import Header from "./Header";
 import {useSelector} from "react-redux";
 
 function WeatherForecast () {
-    const {cityName} = useParams()
-    const theme = useSelector(state => state.style.theme)
+    const {cityName} = useParams();
+    const theme = useSelector(state => state.style.theme);
     
     return (
         <div className={`${theme === "dark" ? "user-bg-dark" : ""}`}>
@@ -19,8 +19,7 @@ function WeatherForecast () {
                     </div>
                 </div>
         </div>
-
-    )
+    );
 }
 
 export default WeatherForecast
