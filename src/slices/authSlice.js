@@ -21,6 +21,7 @@ export const login = createAsyncThunk(
         handleAPIError(loginAPI, rejectWithValue, credentials )
 );
 
+
 export const register = createAsyncThunk(
     'auth/register',
     async (data, { rejectWithValue }) =>
@@ -44,6 +45,9 @@ export const authSlice = createSlice(
             error: null,
         },
         reducers: {
+            setError : (state, action) => {
+                state.error = action.payload;
+            }
         },
         extraReducers: (builder) => {
             builder
@@ -59,6 +63,7 @@ export const authSlice = createSlice(
                     state.status = 'failed';
                     state.error = action.payload;
                 })
+            
                 .addCase(register.pending, (state) => {
                     state.status = 'loading';
                     state.error = null;
@@ -95,6 +100,6 @@ export const selectUser = (state) => {
 export const selectAuthingStatus = (state) => {
     return state.auth.status;
 }
-
+export const toSetError = authSlice.actions.setError;
 
 export default authSlice.reducer

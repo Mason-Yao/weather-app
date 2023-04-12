@@ -1,6 +1,7 @@
 import axios from "axios";
+import {backendUrl} from "../config";
 
-axios.defaults.baseURL = process.env.BACKEND_SERVER_PATH || "http://localhost:13000"
+axios.defaults.baseURL = backendUrl || "http://localhost:13000";
 
 const token = localStorage.getItem('token');
 
@@ -30,6 +31,5 @@ export const getWeatherForecastAPI = (city) => {
 }
 
 export const updateSavedCitiesAPI = (data) => {
-    console.log(data)
     return handleAPI(axios.put, '/user/cities', data, {headers: {'Authorization': 'Bearer ' + token }});
 }

@@ -14,6 +14,7 @@ function Header () {
     const dispatch = useDispatch();
     const [showUserInfo, setShowUserInfo] = useState(false);
     const user = useSelector(selectUser);
+    const googleId = user && user.googleId;
     const username = user && user.username;
     const fullName = user ? `${user.firstName} ${user.lastName}` : "Guest";
     const handleToggleUserInfo = () => {
@@ -22,6 +23,7 @@ function Header () {
 
     const handleSwitchMode = () => {
         dispatch(setTheme(mode === 'light' ? 'dark' : 'light'));
+        window.localStorage.setItem('theme', mode === 'light' ? 'dark' : 'light');
     };
 
     const handleLogout = () => {
@@ -65,15 +67,17 @@ function Header () {
                     </Container>
                     <Container className="d-flex justify-content-center">
                         <h4>
-                            {username}
+                            {googleId ? "Google user " + username : username}
                         </h4>
                     </Container>
                     <div style={{height: "5rem"}}>&nbsp;</div>
+                    {user &&                     
                     <Container className="d-flex justify-content-center">
                         <Button variant="outline-dark" onClick={handleLogout}>
                             LOG OUT
                         </Button>
-                    </Container>
+                    </Container>}
+
                 </div>
             </div>
             <div className={`user-info-overlay ${showUserInfo ? "user-info-overlay-show" : ""}`} />

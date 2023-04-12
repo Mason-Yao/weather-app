@@ -12,11 +12,14 @@ function CarouselCurrentWeather (props) {
     const cities = [...props.cities, "newCity"];
     const [currentIndex, setCurrentIndex] = useState(0);
     const handleNext = () => {
-        setCurrentIndex((currentIndex + 1) % props.cities.length);
+        if(currentIndex + numberOfCities < cities.length) {
+            setCurrentIndex(currentIndex + 1);
+        }
     };
 
     const handlePrevious = () => {
-        setCurrentIndex((currentIndex - 1 + props.cities.length) % props.cities.length);
+        if(currentIndex > 0)
+        setCurrentIndex(currentIndex - 1);
     };
 
     const [numberOfCities, setNumberOfCities] = useState(3);

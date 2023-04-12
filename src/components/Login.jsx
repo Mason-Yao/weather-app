@@ -1,7 +1,8 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {login, selectAuthingStatus} from "../slices/authSlice";
-
+import {login, toSetError, selectAuthingStatus} from "../slices/authSlice";
+import {useEffect} from "react";
+import { backendUrl } from "../config";
 
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,9 +15,13 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import logo from "../images/logo.png";
+import GoogleIcon from '@mui/icons-material/Google';
 
+import twoCircles from "../images/two-circles.png";
+import sideGradients from "../images/side-gradients.png";
+import logo from "../images/logo.png";
 import Header from "./Header";
+
 
 function Copyright(props) {
     return (
@@ -33,10 +38,24 @@ function Copyright(props) {
 
 const theme = createTheme();
 
+export function AuthBackground () {
+    return (
+        <div className="background-container">
+            <div className="two-circles">
+                <img src={twoCircles} alt="two circles" />
+            </div>
+            <div className="side-gradients">
+                <img src={sideGradients} alt="side gradients" />
+            </div>
+        </div>
+    )
+}
+
 export default function Login() {
     const dispatch = useDispatch();
     const error = useSelector(state => state.auth.error);
     const status = useSelector(selectAuthingStatus);
+    const backendServer = backendUrl || "http://localhost:13000";
 
     if(status && status === "succeeded") {
         window.location.href = "/user";
@@ -51,11 +70,28 @@ export default function Login() {
         dispatch(login(data));
     };
 
+    const handleGoogleRedirect = () => {
+        const { search } = window.location;
+        const params = new URLSearchParams(search);
+        const token = params.get('token');
+        const user = JSON.parse(params.get('user'));
+        
+        if (token && user) {
+            localStorage.setItem('token', token);
+            window.location.href = "/user";
+        } else {
+            dispatch(toSetError(('Failed to authenticate with Google')));
+        }
+    };
+    
+    useEffect(() => {
+    handleGoogleRedirect();
+    }, []);
 
     return (
-
         <ThemeProvider theme={theme}>
             <Header />
+            <AuthBackground />
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
@@ -106,16 +142,19 @@ export default function Login() {
                         >
                             Sign In
                         </Button>
-                        <Grid container>
+                        <Grid container spacing={2}>
                             {/*<Grid item xs>*/}
                             {/*    <Link href="#" variant="body2">*/}
                             {/*        Forgot password?*/}
                             {/*    </Link>*/}
                             {/*</Grid>*/}
-                            <Grid item>
+                            <Grid item className="sign-item">
                                 <Link href="/register" variant="body2">
-                                    {"Don't have an account? Sign Up"}
+                                    Don't have an account? Sign Up
                                 </Link>
+                            </Grid>
+                            <Grid item className="sign-item">
+                                <Link href={backendServer + "/auth/google"} variant="body2"><GoogleIcon />Sign in with Google</Link>
                             </Grid>
                         </Grid>
                     </Box>

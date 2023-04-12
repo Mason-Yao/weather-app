@@ -30,16 +30,12 @@ export const weatherSlice = createSlice(
         extraReducers: (builder) => {
             builder
                 .addCase(getWeatherForecast.fulfilled, (state, action) => {
-                    console.log("success")
-                    console.log(action.payload)
                     // In the search page, user input may be different from the city name returned by the API,
-                    // so we need to use the cityAlias as the key to store the weather data, a selector method
+                    // so we need to use the cityAlias as the key to store the weather data in Redux, a selector method
                     // is called by passing the cityAlias as the argument to get the weather data.
                     state.weatherData[action.payload.cityAlias] = {...action.payload, requestStatus: 'succeeded'};
                 })
                 .addCase(getWeatherForecast.rejected, (state, action) => {
-                    console.log("failed")
-                    console.log(action.payload)
                     if(action.payload.errorCode === 401) {
                         state.loginStatus = false;
                     }

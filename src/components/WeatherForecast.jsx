@@ -8,16 +8,16 @@ function WeatherForecast () {
     const theme = useSelector(state => state.style.theme);
     
     return (
-        <div className={`${theme === "dark" ? "user-bg-dark" : ""}`}>
+        <div className={`forecast ${theme === "dark" ? "forecast-dark" : "forecast-light"}`}>
             <Header />
             <div>
                 <div style={{height: "4rem"}} >&nbsp;</div>
-                    <div className="d-flex justify-content-center">
+                <div className="d-flex justify-content-center">
                         <WeatherForecastCard
                         city={cityName}
                         />
-                    </div>
                 </div>
+            </div>
         </div>
     );
 }

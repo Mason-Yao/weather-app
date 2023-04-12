@@ -1,3 +1,28 @@
+.background-container {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 50px);
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.background-container img {
+    height: 101%;
+
+}
+
+.background-container .two-circles {
+    transform: translate(-50%, 50%);
+}
+
+.sign-item {
+    margin-right: 2rem;
+}
+
 .user-info{
     position: absolute;
     top: 0;
@@ -70,10 +95,42 @@
     padding: 5% 30%;
 }
 
+.add-icon:hover{
+    cursor: pointer;
+}
+
+.city-illustration {
+    width: 95%;
+    margin: .5rem auto;
+}
+
 .forecast-card {
     width: 68rem;
     height: 40rem;
     border-radius: 2rem;
+    background: transparent;
+}
+
+.forecast-card-now {
+    
+    width: 100%;
+    padding: 4rem 0;
+    border-radius: 2rem 2rem 0 0;
+}
+
+.now-light {
+    background: linear-gradient(180.00deg, rgba(131,131,255,0.6),rgba(255,217,255,0.6),rgba(255,255,255,0.6));
+    color: #000;
+}
+
+.now-dark {
+    background: linear-gradient(180.00deg, rgba( 0, 4, 98, 0.6), rgba(90, 22, 108, 0.6));
+    color: #fff;
+}
+
+.forecast-card-future {
+    background-color: #fff;
+    border-radius: 0 0 2rem 2rem;
 }
 
 .title-city-name {
@@ -91,7 +148,6 @@
     color: white;
 }
 
-
 .user-bg-dark {
     height: 100vh;
     background: linear-gradient(
@@ -103,4 +159,45 @@
 
 .border-shadow {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.forecast {
+    width: 100vw;
+    height: 100vh;
+}
+
+.forecast-light {
+
+    background: url("./images/forecast-background-light.png");
+    background-size: 180% auto;
+    background-position: center;
+}
+
+.forecast-dark:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            to bottom,
+            #EE7BBE,
+            #575FF7
+    );
+    opacity: 0.8;
+}
+.forecast-dark {
+    background:url("./images/ellipse-dark.png");
+    background-size: 60% auto;
+    background-position: bottom -16rem right;
+    background-repeat: no-repeat;
+    background-blend-mode: normal;
+}
+
+
+.forecast-day-weather-icon {
+    height: 8rem;
+    padding-top: 1rem;
+
 }

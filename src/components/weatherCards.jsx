@@ -11,18 +11,26 @@ import sunny from "../images/sunny.png";
 import rainy from "../images/rainy.png";
 import snowy from "../images/snowy.png";
 import stormy from "../images/stormy.png";
+import overcast from "../images/overcast.png";
+import mist from "../images/mist.png";
+import fog from "../images/fog.png";
+import clear from "../images/clear.png";
+
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {selectUser} from "../slices/authSlice";
 import {updateSavedCitiesAPI} from "../services/api";
 import Container from "react-bootstrap/Container";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import {Fab} from "@mui/material";
+import plucIconLight from "../images/plus-icon-light.png";
+import plucIconDark from "../images/plus-icon-dark.png";
+import cityIllustrationLight from "../images/city-illustration-light.png";
+import cityIllustrationDark from "../images/city-illustration-dark.png";
+
 function weatherIconSelect(weatherCondition) {
     if (weatherCondition.toLowerCase().includes("cloud")) {
         return cloudy;
     }
-    if (weatherCondition.toLowerCase().includes("sun") || weatherCondition.toLowerCase().includes("clear")) {
+    if (weatherCondition.toLowerCase().includes("sun")) {
         return sunny;
     }
     if (weatherCondition.toLowerCase().includes("rain")) {
@@ -33,6 +41,18 @@ function weatherIconSelect(weatherCondition) {
     }
     if (weatherCondition.toLowerCase().includes("storm")) {
         return stormy;
+    }
+    if (weatherCondition.toLowerCase().includes("overcast")) {
+        return overcast;
+    }
+    if (weatherCondition.toLowerCase().includes("mist")) {
+        return mist;
+    }
+    if (weatherCondition.toLowerCase().includes("fog")) {
+        return fog;
+    }
+    if (weatherCondition.toLowerCase().includes("clear")) {
+        return clear;
     }
     return null;
 }
@@ -59,12 +79,10 @@ function CurrentWeatherCard(props) {
         condition: "NA",
         tempMax: "NA",
         tempMin: "NA",
-        weatherIcon: null
+        weatherIcon: null,
     }
     // Check the data request thunk status and update the weather data.
     if (weatherData && weatherData.requestStatus === "succeeded") {
-        console.log("mark1");
-        console.log(weatherData);
         currentWeatherData.cityName = weatherData.location.name;
         currentWeatherData.tempNow = weatherData.current.temp_c;
         currentWeatherData.condition = weatherData.current.condition.text;
@@ -107,7 +125,7 @@ function CurrentWeatherCard(props) {
             </Card.Link>
             <Card.Text></Card.Text>
             <Container className="weather-image">
-                <Card.Img variant="top" src={currentWeatherData.weatherIcon} className="weather-icon"/>
+                <Card.Img variant="top" src={currentWeatherData.weatherIcon} className="weather-icon" alt={currentWeatherData.condition}/>
             </Container>
 
             <Card.Body>
@@ -152,18 +170,22 @@ function CurrentWeatherCard(props) {
 function AddCityCard() {
     const searchLink = "/search"
     const theme = useSelector(selectTheme)
+    const handleClick = () => {
+        window.location.href = searchLink;
+    }
     return (
         <Card className={`d-flex text-center justify-content-center weather-card border-shadow ${theme === "dark" ? "current-card-dark" : ""}`}>
             <Card.Link className="title-city-name" href={searchLink} style={{color: "#7DB9B6"}}>
                 Add City
             </Card.Link>
-            <Card.Body className="d-flex flex-column justify-content-center">
-                <Container className="d-flex justify-content-center">
-                    <Fab sx={{width:"8rem", height:"8rem"}} >
-                        <AddCircleIcon sx={{fontSize:"10rem", color:"rgba(128, 145, 254, 1)"}} onClick={() => window.location.href=searchLink}/>
-                    </Fab>
+            <Card.Text></Card.Text>
+            <Container className="weather-image">
+                <Card.Img onClick={handleClick} variant="top" src={theme === "light" ? plucIconLight : plucIconDark} className="weather-icon add-icon" alt="add"/>
+            </Container>
+            <Card.Body className="d-flex justify-content-center">
+                <Container className="d-flex flex-column justify-content-center align-items-center">
+                    <Card.Img variant="Bottom" src={theme === "light" ? cityIllustrationLight : cityIllustrationDark} className="city-illustration" alt="city illustration"/>
                 </Container>
-
             </Card.Body>
         </Card>
     );
@@ -172,6 +194,7 @@ function AddCityCard() {
 function WeatherForecastCard(props) {
     const weatherData = useSelector(selectWeatherByCIty)(props.city)
     const dispatch = useDispatch()
+    const theme = useSelector(selectTheme)
 
     // Request the weather data from the API
     useEffect(() => {
@@ -207,29 +230,30 @@ function WeatherForecastCard(props) {
 
 
     return (
-        <Card className="text-center justify-content-center border-shadow forecast-card">
-            <Row>
-                <Col>
-                    <Card.Title style={{fontSize: "40px"}}>{currentWeatherData.tempNow} &#8451;</Card.Title>
-                    <Card.Text>{currentWeatherData.condition}</Card.Text>
-                    <Row>
-                        <Col>
-                            <Card.Text>WIND</Card.Text>
-                            <Card.Text>{currentWeatherData.windKph} KPH</Card.Text>
-                        </Col>
-                        <Col>
-                            <Card.Text>HUMIDITY</Card.Text>
-                            <Card.Text>{currentWeatherData.humidity} KPH</Card.Text>
-                        </Col>
-                    </Row>
-                </Col>
-                <Col>
-                    <Card.Title style={{marginTop: "1rem", fontSize: "20px"}}>{currentWeatherData.cityName}</Card.Title>
-                </Col>
-            </Row>
-
-            <Card.Body>
-                <Row className="d-flex justify-content-end ">
+        <Card className={`text-center justify-content-center border-shadow forecast-card`}>
+            <div className={`forecast-card-now ${theme === "light" ? "now-light" : "now-dark"}`}>
+                <Row>
+                    <Col>
+                        <Card.Title style={{fontSize: "40px"}}>{currentWeatherData.tempNow} &#8451;</Card.Title>
+                        <Card.Text>{currentWeatherData.condition}</Card.Text>
+                        <Row>
+                            <Col>
+                                <Card.Text>WIND</Card.Text>
+                                <Card.Text>{currentWeatherData.windKph} KPH</Card.Text>
+                            </Col>
+                            <Col>
+                                <Card.Text>HUMIDITY</Card.Text>
+                                <Card.Text>{currentWeatherData.humidity}%</Card.Text>
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col>
+                        <Card.Title style={{marginTop: "1rem", fontSize: "40px"}}>{currentWeatherData.cityName}</Card.Title>
+                    </Col>
+                </Row>
+            </div>
+            <Card.Body className="forecast-card-future">
+                <Row className="d-flex justify-content-center ">
                     {weatherForeCastData.map((day, index) => {
                             return (
                                 <Col xs={2} key={index} className="">
@@ -259,7 +283,7 @@ function DayWeather(props) {
     return (
         <Container className="justify-content-center">
             <h2>{data.day}</h2>
-            <div style={{height: "10rem"}}>
+            <div className="forecast-day-weather-icon">
                 <img src={currentWeatherIcon} style={{width: "40%"}}/>
             </div>
             <h4>{data.avgTemp}</h4>
