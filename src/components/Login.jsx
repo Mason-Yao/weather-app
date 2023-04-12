@@ -102,9 +102,6 @@ export default function Login() {
                         alignItems: 'center',
                     }}
                 >
-                    {/*<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>*/}
-                    {/*    <LockOutlinedIcon />*/}
-                    {/*</Avatar>*/}
                     <Container sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                         <img src={logo} className="logo-image" alt="logo"/>
                     </Container>
@@ -130,10 +127,6 @@ export default function Login() {
                             id="password"
                             autoComplete="current-password"
                         />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
                         <Button
                             type="submit"
                             fullWidth
@@ -143,18 +136,16 @@ export default function Login() {
                             Sign In
                         </Button>
                         <Grid container spacing={2}>
-                            {/*<Grid item xs>*/}
-                            {/*    <Link href="#" variant="body2">*/}
-                            {/*        Forgot password?*/}
-                            {/*    </Link>*/}
-                            {/*</Grid>*/}
                             <Grid item className="sign-item">
                                 <Link href="/register" variant="body2">
                                     Don't have an account? Sign Up
                                 </Link>
                             </Grid>
                             <Grid item className="sign-item">
-                                <Link href={backendServer + "/auth/google"} variant="body2"><GoogleIcon />Sign in with Google</Link>
+                                {/* Google oauth done in the backend need to be in browser context rather than making ajax request*/}
+                                <Link href={backendServer + "/auth/google"} variant="body2">
+                                    <GoogleIcon />Sign in with Google
+                                </Link>
                             </Grid>
                         </Grid>
                     </Box>
